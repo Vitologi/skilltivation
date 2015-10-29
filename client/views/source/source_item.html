@@ -1,0 +1,12 @@
+<template name="sourceItem">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{title}}
+            {{#each authors}}
+                <span class="label label-default">{{this.name}}</span>
+            {{/each}}
+        </div>
+    </div>
+
+</template>
