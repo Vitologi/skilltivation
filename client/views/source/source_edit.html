@@ -7,10 +7,12 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <a role="button" class="btn btn-default source-edit-choser" title="Указать авторов" href="#source-edit-authors">
+
+                            <a class="btn btn-default source-edit-choser {{#if showAuthor}}active{{/if}}" title="Указать авторов" href="#source-edit-authors" data-toggle="collapse">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
-                            <a role="button" class="btn btn-default  source-edit-choser" title="Указать теги" href="#source-edit-tags">
+
+                            <a class="btn btn-default source-edit-choser {{#if showTags}}active{{/if}}" title="Указать теги" href="#source-edit-tags" data-toggle="collapse">
                                 <span class="glyphicon glyphicon-tags"></span>
                             </a>
                         </span>
@@ -20,12 +22,16 @@
                         </span>
                     </div>
 
-                    <div id="source-edit-authors">
-                        авторы
+                    <br>
+
+                    <div class="form-group collapse" id="source-edit-authors">
+                        <label>Авторы</label>
+                        <input type="text" >
                     </div>
 
-                    <div id="source-edit-tags">
-                        теги
+                    <div class="form-group collapse" id="source-edit-tags">
+                        <label>Тематика</label>
+                        <input type="text" >
                     </div>
                 </div>
             </form>
