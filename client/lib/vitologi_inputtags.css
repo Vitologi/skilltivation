@@ -1,0 +1,18 @@
+.bInputtags{
+    cursor:text;
+    height: inherit;}
+    .bInputtags__tag{
+        margin-right: 5px;
+        display: inline-block;}
+    .bInputtags__tagRemover{
+        margin-left: 5px;
+        cursor: pointer;}
+    .bInputtags__tagCursor{
+        border: none;}
+        .bInputtags__tagCursor:focus{
+            outline: 0;}
+    .bInputtags__sourceList{
+        position: absolute;
+        z-index: 99;}
+    .bInputtags__sourceItem{
+       }
