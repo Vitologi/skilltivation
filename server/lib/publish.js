@@ -1,5 +1,30 @@
 
-Meteor.publish("userSources", function(userId){
-    var chosenUser = userId || this.userId;
-    return Sources.find({"userId":chosenUser});
+// Publish source types
+Meteor.publish("Types", function(){
+    return Types.find();
+});
+
+// Publish sources
+Meteor.publish("Sources", function(){
+    return Sources.find();
+});
+
+// Publish user sources
+Meteor.publish("UserSources", function(){
+    return UserSources.find();
+});
+
+// Publish source tags
+Meteor.publish("Tags", function(){
+    return Tags.find();
+});
+
+// Publish appraisals
+Meteor.publish("Appraisals", function(){
+    return Appraisals.find();
+});
+
+// Publish authors
+Meteor.publish("Authors", function(){
+    return Authors.find();
 });
