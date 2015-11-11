@@ -6,6 +6,6 @@ Template.menuUser.helpers({
      * @returns {int}
      */
     "sourceCount":function(){
-        return Sources.find({"user":Meteor.userId()}).count();
+        return Sources.find({"userId":Meteor.userId()}).count();
     }
 });
