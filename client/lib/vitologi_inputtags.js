@@ -105,7 +105,7 @@
                 !parameters.duplicate
                 && inputtags.hasVal(item)
             ){
-                return false;
+                return;
             }
 
             text.innerHTML = name;
@@ -229,19 +229,19 @@
             "keyName":false,
             "valueName":false,
 
-            "getInputtagsClass": function(item){return "bInputtags form-control";},
+            "getInputtagsClass": function(item){return "bInputtags";},
             "getCursorClass": function(item){return "bInputtags__tagCursor";},
-            "getTagClass": function(item){return "bInputtags__tag label label-default";},
+            "getTagClass": function(item){return "bInputtags__tag";},
             "getTagRemoverClass": function(item){return "bInputtags__tagRemover";},
-            "getSourceListClass": function(item){return "bInputtags__sourceList list-group";},
-            "getSourceItemClass": function(item){return "bInputtags__sourceItem list-group-item";},
+            "getSourceListClass": function(item){return "bInputtags__sourceList";},
+            "getSourceItemClass": function(item){return "bInputtags__sourceItem";},
 
             "source":function(item){return [];},
             "cursorHandler": function(e){
                 var params = this.parameters,
                     cursor = params._cursor,
                     sourceList = params._sourceList,
-                    sources, i;
+                    sources, i, len;
 
                 if(({"13":true, "188":true})[e.keyCode]){
                     e.preventDefault();
@@ -255,7 +255,7 @@
                 if(sources = params.source(cursor.getVal())){
                     sourceList.removeAllItems();
 
-                    for(i in sources){
+                    for(i=0, len = sources.length; i<len; i++){
                         sourceList.addItem(sources[i]);
                     }
 
@@ -279,23 +279,23 @@
             "removeTag":function(tag){
                 var params = this.parameters,
                     inputtags = params._inputtags,
+                    sourceList = params._sourceList,
                     tags = params._tags,
                     raw = params._inputtags.getRaw(),
-                    i;
+                    i=0, len= tags.length;
 
-                for(i in tags){
-                    if(tags[i] === tag)delete tags[i];
+                for(; i<len; i++){
+                    if(tags[i] === tag)tags.splice(i,1);
                 }
 
+                sourceList.removeAllItems();
                 tag.getView().parentNode.removeChild(tag.getView());
                 raw.setAttribute("value", JSON.stringify(inputtags.getVal()));
             },
 
             "sourceHandler": function(item){
                 var params = this.parameters,
-                    inputtags = params._inputtags,
-                    cursor = params._cursor;
-
+                    inputtags = params._inputtags;
 
                 if(
                     !params.duplicate
@@ -346,9 +346,9 @@
         "getVal":function(){
             var _this = this,
                 tags = _this.parameters._tags,
-                data = [], i;
+                data = [], i = 0, len = tags.length;
 
-            for(i in tags){
+            for(;i<len; i++){
                 data.push(tags[i].getVal());
             }
 
@@ -359,9 +359,9 @@
             var params = this.parameters,
                 tags = params._tags,
                 key = params.keyName,
-                i;
+                i= 0, len = tags.length;
 
-            for(i in tags){
+            for(; i<len; i++){
                 if(key && (tags[i].getVal())[key] === item[key]){
                     return true;
                 }else if(tags[i].getVal() === item){
