@@ -9,11 +9,6 @@ Meteor.publish("Sources", function(){
     return Sources.find();
 });
 
-// Publish user sources
-Meteor.publish("UserSources", function(){
-    return UserSources.find();
-});
-
 // Publish source tags
 Meteor.publish("Tags", function(){
     return Tags.find();
