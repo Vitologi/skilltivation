@@ -1,0 +1,20 @@
+<template name="debug">
+
+    <div class="well">
+        <h5>
+            Test panel
+        </h5>
+        {{#each serverTests}}
+            <div>
+                {{#if status}}
+                    <span class="glyphicon glyphicon-ok" style="color:green;"></span>
+                {{else}}
+                    <span class="glyphicon glyphicon-remove" style="color:red;"></span>
+                {{/if}}
+                <span>{{message}}</span>
+            </div>
+        {{/each}}
+
+    </div>
+
+</template>
