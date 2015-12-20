@@ -1,6 +1,6 @@
 Template.debug.onRendered(function(){
     Meteor.call('getServerTests', function(error, result) {
-        console.log(result);
+
         if (error)
             return alert(error.reason);
 
