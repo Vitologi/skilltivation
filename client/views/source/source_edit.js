@@ -17,7 +17,8 @@ Template.sourceEdit.onRendered(function () {
     // Material tags (add plugin)
     authors = vitologi.inputtags($('#source-edit-authors input').get(0),{
         "source":function(currentData){
-            return [{_id:"azazaza", name:"Author 1"}, {_id:"azazaza",  name:"Author 2"}];
+            var filter = new RegExp('^'+currentData);
+            return Authors.find({name:filter}).fetch();
         },
 
         keyName:"_id",
@@ -26,10 +27,12 @@ Template.sourceEdit.onRendered(function () {
 
     tags = vitologi.inputtags($('#source-edit-tags input').get(0),{
         "source":function(currentData){
-            return ["Tag 1", "Tag 2"];
+            var filter = new RegExp('^'+currentData);
+            return Tags.find({title:filter}).fetch();
         },
 
-        duplicate: true
+        keyName:"_id",
+        valueName:"title"
     });
 
 });
@@ -57,25 +60,103 @@ Template.sourceEdit.events({
     "click a[href=#source-edit-tags]":function(){Session.set("showTags", !Session.get("showTags"));},
 
     // source add
-    'submit form': function(e) {
+    'click .createSource': function(e) {
         e.preventDefault();
+        e.stopPropagation();
 
-        var source = {
-                title: $(e.target).find('[name=title]').val(),
-                typeId: $(e.target).find('[name=source_type]').val()
+        var $form = $("form.sourceEdit"),
+            source = {
+                title: $form.find('[name=title]').val(),
+                typeId: $form.find('[name=source_type]').val()
             },
             sourceAuthors = authors.getVal(),
-            sourceTags = tags.getVal();
+            sourceTags = tags.getVal(),
+            resultAuthors = [],
+            resultTags = [],
+            newAuthors = [],
+            newTags = [],
+            author, tag, insertedSourceId,
+            i, len;
 
+        Meteor.call('createSource', source, function(err, result) {
 
-        Meteor.call('sourceInsert', source, function(error, result) {
-            // display the error to the user and abort
-            if (error)
-                return alert(error.reason);
+            if (err)return alert(err.reason);
 
-            console.log(sourceAuthors, sourceTags);
+            insertedSourceId = result;
+
+            // divides new and old authors
+            for(i= 0, len=sourceAuthors.length; i<len;i++){
+                author = sourceAuthors[i];
+                if(author._id === author.name){
+                    newAuthors.push(author.name);
+                }else{
+                    resultAuthors.push(author._id);
+                }
+            }
+
+            // append its to source
+            if(newAuthors.length){
+
+                Meteor.call('createManyAuthors', {'names':newAuthors}, function(err, result){
+                    if (err)return alert(err.reason);
+
+                    resultAuthors = resultAuthors.concat(result);
+
+                    Meteor.call('setSourceAuthors',{"id":insertedSourceId, "authors":resultAuthors}, function(err, result){
+                        if (err)return alert(err.reason);
+
+                    });
+
+                });
+
+            }else{
+                Meteor.call('setSourceAuthors',{"id":insertedSourceId, "authors":resultAuthors}, function(err, result){
+                    if (err)return alert(err.reason);
+
+                });
+            }
+
+            // divides new and old tags
+            for(i= 0, len=sourceTags.length; i<len;i++){
+                tag = sourceTags[i];
+                if(tag._id === tag.title){
+                    newTags.push(tag.title);
+                }else{
+                    resultTags.push(tag._id);
+                }
+            }
+
+            for (i = 0, len = resultTags.length; i < len; i++) {
+                tag = resultTags[i];
+
+                Meteor.call("createAppraisal", {"sourceId": insertedSourceId, "tagId": tag}, function (err, result) {
+                    if (err)return alert(err.reason);
+                })
+            }
+
+            for (i = 0, len = newTags.length; i < len; i++) {
+                tag = newTags[i];
+
+                Meteor.call('createTag', {"title":tag}, function(err, result){
+                    if (err)return alert(err.reason);
+
+                    tag = result;
+
+                    Meteor.call('createAppraisal',{"sourceId": insertedSourceId, "tagId": tag}, function(err, result){
+                        if (err)return alert(err.reason);
+                    });
+
+                });
+
+            }
 
         });
+
+        // clear form
+        $form.find('[name=title]').val("");
+        authors.clear();
+        tags.clear();
+        return false;
     }
 
 });

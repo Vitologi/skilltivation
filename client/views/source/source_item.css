@@ -1,0 +1,9 @@
+.source-item-line {
+    font-size: 1.6em;}
+    .source-item-authors > small{
+        font-size: 0.6em;
+        color:grey;}
+    .source-item-authors > small:after{
+        content: ',';}
+    .source-item-authors > small:last-child:after{
+        content: '' !important;}

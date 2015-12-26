@@ -1,11 +1,28 @@
 <template name="sourceItem">
 
-    <div class="panel panel-default">
+    <div class="panel panel-default source-item-line">
         <div class="panel-body">
-            {{title}}
-            {{#each authors}}
-                <span class="label label-default">{{this.name}}</span>
-            {{/each}}
+            <span>
+                {{title}}
+            </span>
+
+            <span class="source-item-authors">
+                {{#each authors}}
+                    <small>{{this.name}}</small>
+                {{/each}}
+            </span>
+
+            <div class="btn-group pull-right">
+
+                <button name="editSource" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+
+                <button name="deleteSource" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+
+            </div>
         </div>
     </div>
 
