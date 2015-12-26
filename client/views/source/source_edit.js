@@ -28,7 +28,7 @@ Template.sourceEdit.onRendered(function () {
     tags = vitologi.inputtags($('#source-edit-tags input').get(0),{
         "source":function(currentData){
             var filter = new RegExp('^'+currentData);
-            return Tags.find({name:filter}).fetch();
+            return Tags.find({title:filter}).fetch();
         },
 
         keyName:"_id",
@@ -75,7 +75,8 @@ Template.sourceEdit.events({
             resultTags = [],
             newAuthors = [],
             newTags = [],
-            author, tag, insertedSourceId;
+            author, tag, insertedSourceId,
+            i, len;
 
         Meteor.call('createSource', source, function(err, result) {
 
@@ -83,7 +84,8 @@ Template.sourceEdit.events({
 
             insertedSourceId = result;
 
-            for(var i= 0, len=sourceAuthors.length; i<len;i++){
+            // divides new and old authors
+            for(i= 0, len=sourceAuthors.length; i<len;i++){
                 author = sourceAuthors[i];
                 if(author._id === author.name){
                     newAuthors.push(author.name);
@@ -92,6 +94,7 @@ Template.sourceEdit.events({
                 }
             }
 
+            // append its to source
             if(newAuthors.length){
 
                 Meteor.call('createManyAuthors', {'names':newAuthors}, function(err, result){
@@ -113,6 +116,39 @@ Template.sourceEdit.events({
                 });
             }
 
+            // divides new and old tags
+            for(i= 0, len=sourceTags.length; i<len;i++){
+                tag = sourceTags[i];
+                if(tag._id === tag.title){
+                    newTags.push(tag.title);
+                }else{
+                    resultTags.push(tag._id);
+                }
+            }
+
+            for (i = 0, len = resultTags.length; i < len; i++) {
+                tag = resultTags[i];
+
+                Meteor.call("createAppraisal", {"sourceId": insertedSourceId, "tagId": tag}, function (err, result) {
+                    if (err)return alert(err.reason);
+                })
+            }
+
+            for (i = 0, len = newTags.length; i < len; i++) {
+                tag = newTags[i];
+
+                Meteor.call('createTag', {"title":tag}, function(err, result){
+                    if (err)return alert(err.reason);
+
+                    tag = result;
+
+                    Meteor.call('createAppraisal',{"sourceId": insertedSourceId, "tagId": tag}, function(err, result){
+                        if (err)return alert(err.reason);
+                    });
+
+                });
+
+            }
 
         });
 
