@@ -1,3 +1,11 @@
+Template.menuUser.onRendered(function(){
+   Meteor.call("getSourcesCount", function(err, result){
+       if(err)return alert(err.reason);
+
+       Session.set("sourcesCount", result);
+   });
+});
+
 Template.menuUser.helpers({
 
     /**
@@ -5,7 +13,7 @@ Template.menuUser.helpers({
      *
      * @returns {int}
      */
-    "sourceCount":function(){
-        return Sources.find({"userId":Meteor.userId()}).count();
+    "sourcesCount":function(){
+        return Session.get("sourcesCount");
     }
 });

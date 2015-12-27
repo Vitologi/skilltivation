@@ -5,8 +5,8 @@ Meteor.publish("Types", function(){
 });
 
 // Publish sources
-Meteor.publish("Sources", function(){
-    return Sources.find();
+Meteor.publish("Sources", function(options){
+    return Sources.find({}, options);
 });
 
 // Publish source tags

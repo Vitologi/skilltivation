@@ -2,9 +2,6 @@
 // subscribe source types
 Meteor.subscribe("Types");
 
-// subscribe sources
-Meteor.subscribe("Sources");
-
 // subscribe source tags
 Meteor.subscribe("Tags");
 

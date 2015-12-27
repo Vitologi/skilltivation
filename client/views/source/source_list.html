@@ -9,4 +9,10 @@
         {{> sourceItem}}
     {{/each}}
 
+    {{#if nextPath}}
+        <div class="text-center">
+            <a href="{{nextPath}}" class="btn btn-link">Загрузить еще</a>
+        </div>
+    {{/if}}
+
 </template>
