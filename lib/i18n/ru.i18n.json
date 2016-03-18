@@ -1,0 +1,36 @@
+{
+  "debug":{
+    "title":"Тестовая панель"
+  },
+  "footer":{
+    "meteor":"Библиотека Meteor JS",
+    "vitologi":"Команда Vitologi"
+  },
+  "header":{
+    "menu":"Меню"
+  },
+  "home":{
+    "description":"Главная страница."
+  },
+  "menu":{
+    "user":{
+      "mymaterials":"Мои материалы",
+      "monitoring":"Мониторинг"
+    }
+  },
+  "source":{
+    "edit":{
+      "add_new":"Добавить новый материал",
+      "type":"Тематика",
+      "set_authors":"Добавить автора",
+      "set_tags":"Добавить тематику",
+      "input_name":"Введите название материала",
+      "add":"Добавить",
+      "authors":"Авторы",
+      "tags":"Теги"
+    },
+    "list":{
+      "more":"Показать больше"
+    }
+  }
+}
