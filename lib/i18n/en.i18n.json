@@ -1,0 +1,36 @@
+{
+  "debug":{
+    "title":"Test panel"
+  },
+  "footer":{
+    "meteor":"Meteor JS",
+    "vitologi":"Vitologi team"
+  },
+  "header":{
+    "menu":"Menu"
+  },
+  "home":{
+    "description":"You look on main page."
+  },
+  "menu":{
+    "user":{
+      "mymaterials":"My sources",
+      "monitoring":"Monitoring"
+    }
+  },
+  "source":{
+    "edit":{
+      "add_new":"Add new source",
+      "type":"Source type",
+      "set_authors":"Add source author",
+      "set_tags":"Add source tag",
+      "input_name":"Set source name",
+      "add":"Add",
+      "authors":"Authors",
+      "tags":"Tags"
+    },
+    "list":{
+      "more":"Show more"
+    }
+  }
+}
