@@ -7,7 +7,8 @@
     "vitologi":"Vitologi team"
   },
   "header":{
-    "menu":"Menu"
+    "menu":"Menu",
+    "options":"Options"
   },
   "home":{
     "description":"You look on main page."

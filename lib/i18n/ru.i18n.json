@@ -7,7 +7,8 @@
     "vitologi":"Команда Vitologi"
   },
   "header":{
-    "menu":"Меню"
+    "menu":"Меню",
+    "options":"Настройки"
   },
   "home":{
     "description":"Главная страница."
